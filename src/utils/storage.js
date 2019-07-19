@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import {Post} from '../models/Post';
+import {PostObject} from '../models/PostObject';
 
 const POSTS_STORAGE_KEY = 'posts_storage_key';
 
@@ -21,10 +21,12 @@ export const getBlog = async () => {
 
       objectData.forEach((element) => {
 
-        blogObject.push(Post.getInstance(element));
+        blogObject.push(PostObject.getInstance(element));
       });
 
       return blogObject;
+    } else {
+      return [];
     }
   } catch (e) {
     console.log('READING FROM STORAGE ERROR: ' + e);

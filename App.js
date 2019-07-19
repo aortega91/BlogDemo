@@ -7,6 +7,8 @@ import reducer from './src/utils/redux/reducer'
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 import Blog from './src/components/Blog/Blog';
+import PostDetails from './src/components/Post/PostDetails';
+
 
 import {globalStyle} from './src/globalStyles';
 
@@ -15,8 +17,8 @@ const {primaryColor} = globalStyle.themeStyle;
 const store = createStore(reducer);
 
 const MainNavigator = createStackNavigator({
-    Blog: {screen: Blog},/*
-  Profile: {screen: ProfileScreen},*/
+    Blog: {screen: Blog},
+    PostDetails: {screen: PostDetails},
   },
   {
     defaultNavigationOptions: {

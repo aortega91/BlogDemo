@@ -7,11 +7,9 @@ import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
 
 import Modal from 'react-native-modal';
-import {Post} from '../../models/Post';
+import {PostObject} from '../../models/PostObject';
 
 import {addPost} from '../../utils/redux/reducer';
-
-import moment from "moment";
 
 class NewPostModal extends React.Component {
 
@@ -26,7 +24,7 @@ class NewPostModal extends React.Component {
 
   }
 
-  getRandomImageString(){
+  getRandomImageIndex(){
 
     return Math.floor(Math.random() * 4) + 1;
 
@@ -36,7 +34,7 @@ class NewPostModal extends React.Component {
 
     const {title, subtitle, content} = this.state;
 
-    let newPost = new Post(title, subtitle, content, moment().format('DD/MM/YYYY'), this.getRandomImageString() );
+    let newPost = new PostObject(title, subtitle, content, this.getRandomImageIndex() );
 
     this.props.addPost(newPost);
 

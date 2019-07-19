@@ -13,6 +13,7 @@ import {globalStyle} from '../../globalStyles';
 
 const {iconSize} = globalStyle.appBar;
 const {accentColor} = globalStyle.themeStyle;
+const {emptyListView, emptyListText} = globalStyle.emptyList;
 
 //Component styles
 import {blogStyles} from './styles';
@@ -41,7 +42,7 @@ class Blog extends React.Component {
       headerRight: (
         <Icon
           containerStyle={{marginRight: 8}}
-          name='delete'
+          name='delete-sweep'
           type='material'
           color='#fff'
           size={iconSize}
@@ -99,14 +100,16 @@ class Blog extends React.Component {
       />;
 
     if (this.props.blog.length === 0) {
-      contentView = <Text>No hay posts que mostrar</Text>;
+      contentView = <View style={emptyListView}><Text style={emptyListText}>No hay posts que mostrar</Text></View>;
     }
 
     return (
-      <View style={mainView}>
-        {contentView}
-        <Icon raised reverse name='add' type="material" size={30} color={accentColor}
-              containerStyle={fabContainer} onPress={() => this.showModal()}/>
+      <View>
+        <View style={mainView}>
+          {contentView}
+          <Icon raised reverse name='add' type="material" size={30} color={accentColor}
+                containerStyle={fabContainer} onPress={() => this.showModal()}/>
+        </View>
         <NewPostModal showModal={this.state.newPostModalActive} closeModal={this.hideModal}/>
       </View>
     );
@@ -118,8 +121,9 @@ class Blog extends React.Component {
   }
 
   postPressed = (postId) => {
-    console.log('Post Pressed ID: ' + postId);
-
+    this.props.navigation.navigate('PostDetails', {
+      postId: postId,
+    });
   };
 
   favoritePressed = (postId) => {
@@ -141,7 +145,6 @@ class Blog extends React.Component {
 }
 
 const mapStateToProps = ({blog}) => {
-
   return {
     blog,
   };

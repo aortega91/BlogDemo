@@ -2,33 +2,22 @@ import React from 'react';
 import {TouchableHighlight, View, Text} from 'react-native';
 import {Card, Icon, Avatar} from 'react-native-elements';
 
-
 import {postStyles} from './styles';
 import {connect} from 'react-redux';
 
+import {getImageAsset} from './utils';
+import moment from 'moment';
+
 const {cardStyle, cardActionStyle, detailsContainerStyle, userNameStyle, dateStyle} = postStyles;
+
+
 
 class Post extends React.Component {
 
-  getImageAsset(imageId) {
-
-    switch (imageId) {
-
-      case 1:
-        return require('../../assets/md-background-1.jpg');
-      case 2:
-        return require('../../assets/md-background-2.jpg');
-      case 3:
-        return require('../../assets/md-background-3.png');
-      case 4:
-        return require('../../assets/md-background-4.png');
-    }
-
-  }
 
   render() {
 
-    const {id, title, subtitle, content, date, imageId, favorite} = this.props.postData;
+    const {id, title, subtitle, author, content, date, imageId, favorite} = this.props.postData;
 
     return (
       <TouchableHighlight underlayColor={'rgba(0,0,0,0.0)'}
@@ -38,7 +27,7 @@ class Post extends React.Component {
         <Card
           featuredTitle={title}
           featuredSubtitle={subtitle}
-          image={this.getImageAsset(imageId)}
+          image={getImageAsset(imageId)}
           containerStyle={{marginBottom: this.props.isLast ? 60 : 0, ...cardStyle}}
         >
           <Icon
@@ -56,10 +45,10 @@ class Post extends React.Component {
             <Avatar rounded size={36} source={{uri: 'https://picsum.photos/200/300'}}/>
             <View style={{marginLeft: 8}}>
               <Text style={userNameStyle}>
-                Usuario
+                {author}
               </Text>
               <Text style={dateStyle}>
-                {date}
+                {moment(date).format('DD/MM/YYYY')}
               </Text>
             </View>
           </View>
@@ -81,7 +70,5 @@ const mapStateToProps = (state, ownProps) => {
     favorite,
   };
 };
-
-//TODO CREATE POST DETAILS COMPONENT, https://dribbble.com/shots/1932736-Mobile-Blog-Layout-Visual-Design
 
 export default connect(mapStateToProps, null)(Post);
